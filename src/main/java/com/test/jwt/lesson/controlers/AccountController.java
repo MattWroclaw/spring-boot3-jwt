@@ -37,6 +37,9 @@ public class AccountController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    /*
+    GET with Authorization header and token from login
+     */
     @GetMapping("/profile")
     public ResponseEntity<Object> profile(Authentication authentication) {
         var response = new HashMap<String, Object>();
@@ -48,6 +51,16 @@ public class AccountController {
 
         return ResponseEntity.ok(response);
     }
+
+
+    /*
+    Used Json
+    {
+        "username": "test",
+        "password" : "pass",
+        "email" : "fdasfas"
+    }
+     */
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterDto registerDto) {
@@ -93,6 +106,15 @@ public class AccountController {
 
     }
 
+
+    /*
+    Used Json
+    {
+        "username": "test",
+        "password" : "pass"
+    }
+     */
+
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
         try{
@@ -107,7 +129,6 @@ public class AccountController {
             response.put("token", jwtToken);
             response.put("user", appUser);
             return ResponseEntity.ok(response);
-
 
         } catch (AuthenticationException e) {
             throw new RuntimeException(e);

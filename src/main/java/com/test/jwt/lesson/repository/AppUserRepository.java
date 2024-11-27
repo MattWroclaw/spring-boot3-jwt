@@ -43,9 +43,9 @@ public class AppUserRepository {
     }
     private AppUser createUser(){
         AppUser user = new AppUser();
-        user.setUsername("user");
-        user.setPassword("password");
-        user.setEmail("test@email.com");
+        user.setUsername("user-created-on-the-fly");
+        user.setPassword("password-created-on-the-fly");
+        user.setEmail("test@email.com-created-on-the-fly");
         user.setRole("ROLE_USER");
         return user;
     }
