@@ -15,13 +15,15 @@ public class AppUserRepository {
 
         for(AppUser user: users){
             if(user.getUsername().equals(username)){
+                System.out.println("User was in the list");
                 return user;
             }
         }
 
-//        if (username.equals("user")) {
-//            return createUser();
-//        }
+        if (!username.isBlank()) {
+            System.out.println("User was tweaked");
+            return createUser();
+        }
 
         return null;
     }

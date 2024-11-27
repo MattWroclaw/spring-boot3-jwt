@@ -11,14 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -38,6 +36,18 @@ public class AccountController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @GetMapping("/profile")
+    public ResponseEntity<Object> profile(Authentication authentication) {
+        var response = new HashMap<String, Object>();
+        response.put("User", authentication.getName());
+        response.put("Authorities", authentication.getAuthorities());
+
+        var appUser = appUserRepository.findByUsername(authentication.getName());
+        response.put("User", appUser);
+
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterDto registerDto) {
